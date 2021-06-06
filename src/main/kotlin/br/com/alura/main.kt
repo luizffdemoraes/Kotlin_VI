@@ -3,8 +3,14 @@ package br.com.alura
 fun main() {
 //    testaColecao()
     val banco = BancoDeNomes()
+    //copia por referencia conversão para burlar o sistema
+//    val nomesSalvos: MutableCollection<String> = banco.nomes as MutableCollection<String>
+//    banco.nomes.add("Alex")
+
+    //Ao usar o toList a gambiarra acima não funciona mais pois estamos recebendo uma cópia não a fonte real
+    val nomesSalvos: Collection<String> = banco.nomes
     banco.salva("Alex")
-    println(banco.nomes)
+    println(nomesSalvos)
     println(BancoDeNomes().nomes)
 
 
@@ -12,7 +18,16 @@ fun main() {
 
 class BancoDeNomes{
 
-    val nomes: Collection<String> get() = dados
+    /*
+     O próprio Kotlin fala que vão existir funções de cópia, que são a toList,
+     toMutableList, toSet que vão criar o que chamamos de snapshot,
+     uma cópia de verdade da nossa coleção, de tal forma que não estamos devolvendo
+     a coluna de verdade, nossa referência interna.
+     Vamos devolver uma cópia dela.
+    */
+
+
+    val nomes: Collection<String> get() = dados.toList()
 
     fun salva(nome: String){
         dados.add(nome)
