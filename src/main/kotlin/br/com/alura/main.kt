@@ -67,6 +67,48 @@ fun main() {
 
     println(pedidosPares)
 
+    /*
+    Plus and Minus Operator mesmo comportamento de soma  e subitração dos collections e set
+    - é restrito ao uso do Pair ou mapOf
+    adição
+     */
+    println(pedidos + Pair(7, 90))
+    println(pedidos + mapOf(8 to 20.0, 9 to 150.0))
+    println(pedidos)
+
+    //remoção
+    println(pedidos - 6 )
+    println(pedidos - listOf(6, 5))
+    println(pedidos)
+
+    /*
+      plus assign e o minus assign, que mais abaixo vai falar mais a respeito,
+      porque trata-se de uma operação apenas com mutables maps,
+      que só para dar um spoiler é uma técnica na qual a gente consegue
+      realmente adicionar de verdade utilizando esses operadores, ou remover de verdade
+      da fonte original de dados.
+     */
+
+    //funções similares para inserção
+    pedidos.putAll(setOf<Pair<Int,Double>>(8 to 20.0, 9 to 150.0, 8 to 30.0))
+    pedidos += listOf<Pair<Int,Double>>(8 to 20.0, 9 to 150.0, 8 to 30.0)
+    println(pedidos)
+
+    //funções similares para remoção
+    pedidos.keys.remove(1)
+    println(pedidos)
+
+    pedidos.values.remove(50.0)
+    println(pedidos)
+
+    pedidos.values.remove(100.0)
+    println(pedidos)
+
+    //E considerado só a chave
+    pedidos -= 6
+    println(pedidos)
+
+
 }
 
 
