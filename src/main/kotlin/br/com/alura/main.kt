@@ -3,52 +3,72 @@ package br.com.alura
 fun main() {
 //    testaCopia()
 //    testaSet()
+//    testaMap()
 
-    /*
-        Detalhe o é um Collection porem ele não herda de Collection e Iterable
-        Map - ou dicionário - é um conjunto de chave e valor com chaves unicas
-        cada uma mapeia um valor. Sua grande utilidade e sua conexão logica
-        Exemplo empregado ID e posição na empresa
-        Alternativa ao Pair é o to ele é um infix ele perde performa em casos de muitos valores
-     */
+    val pedidos: MutableMap<Int, Double> = mutableMapOf(
+        Pair(1, 20.0),
+        Pair(2, 34.0),
+        3 to 50.0,
+//        4 to null,
+        5 to 100.0,
+        6 to 80.0
+    )
 
-     val pedidos: MutableMap<Int, Double> = mutableMapOf(
-         Pair(1, 20.0),
-         Pair(2, 34.0),
-         3 to 50.0
-     )
-    println(pedidos) //ler todos eles
-    //pegar um unico elemento aqui ele não pega a posição ele pede a chave
-    val pedido:Double? = pedidos[1]
-    pedido?.let {
-        println("pedido ${it}")
+    //similares
+    val valorPedido: Double? = pedidos[1]
+    val valorPedidos: Double? = pedidos.get(4)
+    println(valorPedido)
+    println(valorPedidos)
+
+    //para trabalhar com nulos e uma maneira de recuperar valor caso a chave não exista ele traz uma exception
+//    val valorPedidosNulos: Double? = pedidos.getValue(4)
+//    println(valorPedidosNulos)
+
+    val messagem: Double? = pedidos.getOrElse(1) {
+        0.0
+    }
+    println(messagem)
+    //que é esse get or default, que realmente vai devolver um valor que seja compatível
+    // ao valor do nosso mapa, mas que seja padrão.
+    println(pedidos.getOrDefault(1, -1.00))
+
+    //Acessar todas as chaves
+    println(pedidos.keys)
+
+    for (numero in pedidos.keys) {
+        println("Pedido $numero")
     }
 
-    //corrigimos o aviso de shadowed
-    for (p:Map.Entry<Int, Double> in pedidos){
-        println("numero do pdido: ${p.key}")
-        println("numero do pdido: ${p.value}")
+    //Acessar todos os valores
+    println(pedidos.values)
+
+    for(valor: Double? in pedidos.values){
+        println("Valor do pedido: $valor")
     }
 
-    //Inserção são similares
-    pedidos[4] = 70.0
-    println(pedidos)
-    pedidos.put(5, 80.0)
-    println(pedidos)
+    //Criando filtros no map
+    val peidosFiltrados:Map<Int,Double> = pedidos.filter { (numero, valor) ->
+        numero % 2 == 0 && valor > 70.0
 
-    //Atualização
-    pedidos[1] = 100.0
-    println(pedidos)
+    }
 
-    //Ao utilizar esse comportamento so é possivel adicionar caso o pedido não exista
-    pedidos.putIfAbsent(6, 200.0)
-    println(pedidos)
+    println(peidosFiltrados)
 
-    //remoção
-    pedidos.remove(6)
-    println(pedidos)
-    pedidos.remove(3, 100.0) //verifica a chave e valor para remover
-    println(pedidos)
+
+    val teste = pedidos.filterValues { valor ->
+        valor > 70.0
+    }
+
+    println(teste)
+
+    val pedidosPares = pedidos.filterKeys { numero ->
+        numero % 2 == 0
+    }
+
+    println(pedidosPares)
 
 }
+
+
+
 
